@@ -1,4 +1,3 @@
-jupyterhub
 numpy
 scipy
 pandas
