@@ -20,31 +20,10 @@ MAINTAINER Tim Jones (tdj28@github)
 
 # Debian packages
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -yq \
-    curl \
-    debconf-utils \
-    gcc \
-    git \
-    g++ \
-    libpq-dev \
-    libfreetype6-dev \
-    libxft-dev \
-    nmap \
-    nodejs \
-    npm \
-    python-dev \
-    python3-dev \
-    r-base \
-    r-base-core \
-    rsyslog \
-    software-properties-common \
-    supervisor \
-    unzip \
-    vim \
-    wget \
-    zip
-        
+COPY packages.txt /usr/local/packages.txt
+RUN apt-get update && cat /usr/local/packages.txt | xargs apt-get install -yq
 
+# Install Oracle's Java
 RUN apt-add-repository ppa:webupd8team/java
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
 RUN apt-get update && apt-get install -yq \
