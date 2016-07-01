@@ -82,18 +82,8 @@ WORKDIR /usr/local/
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 RUN python3 get-pip.py
 
-
-RUN pip3 --no-cache-dir install 'jupyterhub'
-RUN pip3 --no-cache-dir install 'numpy'
-RUN pip3 --no-cache-dir install 'scipy'
-RUN pip3 --no-cache-dir install 'pandas'
-RUN pip3 --no-cache-dir install 'scikit-learn'
-RUN pip3 --no-cache-dir install 'psycopg2'
-RUN pip3 --no-cache-dir install 'sqlalchemy'
-RUN pip3 --no-cache-dir install 'plotly'
-RUN pip3 --no-cache-dir install 'requests'
-RUN pip3 --no-cache-dir install 'matplotlib'
-
+COPY ./requirements.txt /usr/local/requirements.txt
+RUN pip3 --no-cache-dir install -r /usr/local/requirements.txt
 
 # Install Cloud9 IDE
 RUN ln -s /usr/bin/nodejs /usr/bin/node

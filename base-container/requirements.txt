@@ -1,0 +1,10 @@
+jupyterhub
+numpy
+scipy
+pandas
+scikit-learn
+psycopg2
+sqlalchemy
+plotly
+requests
+matplotlib
