@@ -67,15 +67,22 @@ ENV PYTHONPATH "/SparkSource/spark/python:/SparkSource/spark/python/lib/py4j-0.9
 
 WORKDIR /usr/local/ 
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-RUN python get-pip.py
+RUN python3 get-pip.py
 
-RUN pip --no-cache-dir install 'jupyterhub'
-RUN pip --no-cache-dir install 'numpy'
-RUN pip --no-cache-dir install 'scipy'
-RUN pip --no-cache-dir install 'pandas'
-RUN pip --no-cache-dir install 'scikit-learn'
-RUN pip --no-cache-dir install 'psycopg2'
-RUN pip --no-cache-dir install 'sqlalchemy'
-RUN pip --no-cache-dir install 'plotly'
-RUN pip --no-cache-dir install 'requests'
-RUN pip --no-cache-dir install 'matplotlib'
+# Extra apts needed for PIPS go here so as to not bust the cache
+RUN apt-get update && apt-get install -yq \
+    libfreetype6-dev \
+    libpq-dev \
+    libxft-dev \
+    python3-dev 
+
+RUN pip3 --no-cache-dir install 'jupyterhub'
+RUN pip3 --no-cache-dir install 'numpy'
+RUN pip3 --no-cache-dir install 'scipy'
+RUN pip3 --no-cache-dir install 'pandas'
+RUN pip3 --no-cache-dir install 'scikit-learn'
+RUN pip3 --no-cache-dir install 'psycopg2'
+RUN pip3 --no-cache-dir install 'sqlalchemy'
+RUN pip3 --no-cache-dir install 'plotly'
+RUN pip3 --no-cache-dir install 'requests'
+RUN pip3 --no-cache-dir install 'matplotlib'
