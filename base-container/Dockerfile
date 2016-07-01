@@ -23,6 +23,13 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY packages.txt /usr/local/packages.txt
 RUN apt-get update && cat /usr/local/packages.txt | xargs apt-get install -yq
 
+# Pip packages
+WORKDIR /usr/local/ 
+RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+RUN python3 get-pip.py
+COPY ./requirements.txt /usr/local/requirements.txt
+RUN pip3 --no-cache-dir install -r /usr/local/requirements.txt
+
 # Install Oracle's Java
 RUN apt-add-repository ppa:webupd8team/java
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
@@ -57,9 +64,3 @@ ENV JAVA_HOME "/usr/lib/jvm/java-8-oracle"
 ENV PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/SparkSource/spark/bin"
 ENV PYTHONPATH "/SparkSource/spark/python:/SparkSource/spark/python/lib/py4j-0.9-src.zip"
 
-WORKDIR /usr/local/ 
-RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-RUN python3 get-pip.py
-
-COPY ./requirements.txt /usr/local/requirements.txt
-RUN pip3 --no-cache-dir install -r /usr/local/requirements.txt
