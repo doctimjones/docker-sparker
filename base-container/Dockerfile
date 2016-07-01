@@ -16,7 +16,11 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -yq \
     curl \
     debconf-utils \
+    gcc \
     git \
+    g++ \
+    libfreetype6-dev \
+    nmap \
     python-dev \
     r-base \
     r-base-core \
@@ -60,3 +64,18 @@ ENV SPARK_HOME "/SparkSource/spark"
 ENV JAVA_HOME "/usr/lib/jvm/java-8-oracle"
 ENV PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/SparkSource/spark/bin"
 ENV PYTHONPATH "/SparkSource/spark/python:/SparkSource/spark/python/lib/py4j-0.9-src.zip"
+
+WORKDIR /usr/local/ 
+RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+RUN python get-pip.py
+
+RUN pip --no-cache-dir install 'jupyterhub'
+RUN pip --no-cache-dir install 'numpy'
+RUN pip --no-cache-dir install 'scipy'
+RUN pip --no-cache-dir install 'pandas'
+RUN pip --no-cache-dir install 'scikit-learn'
+RUN pip --no-cache-dir install 'psycopg2'
+RUN pip --no-cache-dir install 'sqlalchemy'
+RUN pip --no-cache-dir install 'plotly'
+RUN pip --no-cache-dir install 'requests'
+RUN pip --no-cache-dir install 'matplotlib'
