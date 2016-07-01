@@ -1,9 +1,16 @@
 FROM ubuntu:14.04
 MAINTAINER Tim Jones (tdj28@github)
 
+# sudo curl -sSL https://get.docker.com/ | sh
+# sudo /etc/apparmor.d/docker
+# sudo service apparmor reload
 # docker build -t spark-base .
+# docker volume create --name dev
 
-# docker run -d \
+# interactive:
+# docker run -i -t -p 9999:9999 -p 18888:8888 -v dev:/dev --name pyspark spark-base
+
+# docker run -d -v dev:/dev \
 # -e "SPARK_HOME=/SparkSource/spark" \
 # -e "JAVA_HOME=/usr/lib/jvm/java-8-oracle" \
 # -e "PATH=$PATH:/SparkSource/spark/bin" \
@@ -19,9 +26,14 @@ RUN apt-get update && apt-get install -yq \
     gcc \
     git \
     g++ \
+    libpq-dev \
     libfreetype6-dev \
+    libxft-dev \
     nmap \
+    nodejs \
+    npm \
     python-dev \
+    python3-dev \
     r-base \
     r-base-core \
     rsyslog \
@@ -31,6 +43,7 @@ RUN apt-get update && apt-get install -yq \
     vim \
     wget \
     zip
+        
 
 RUN apt-add-repository ppa:webupd8team/java
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
@@ -69,12 +82,6 @@ WORKDIR /usr/local/
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 RUN python3 get-pip.py
 
-# Extra apts needed for PIPS go here so as to not bust the cache
-RUN apt-get update && apt-get install -yq \
-    libfreetype6-dev \
-    libpq-dev \
-    libxft-dev \
-    python3-dev 
 
 RUN pip3 --no-cache-dir install 'jupyterhub'
 RUN pip3 --no-cache-dir install 'numpy'
@@ -86,3 +93,23 @@ RUN pip3 --no-cache-dir install 'sqlalchemy'
 RUN pip3 --no-cache-dir install 'plotly'
 RUN pip3 --no-cache-dir install 'requests'
 RUN pip3 --no-cache-dir install 'matplotlib'
+
+
+# Install Cloud9 IDE
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+RUN mkdir /usr/local/c9
+WORKDIR /usr/local/c9
+RUN git clone https://github.com/c9/core.git
+WORKDIR /usr/local/c9/core
+RUN scripts/install-sdk.sh
+
+RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /var/log/supervisor/conf.d
+COPY ./c9.conf /etc/supervisor/conf.d/c9.conf
+COPY ./jupyter.conf /etc/supervisor/conf.d/jupyter.conf
+
+# Add local files as late as possible to avoid cache busting
+COPY start-notebook.sh /usr/local/bin/
+COPY jupyter_notebook_config.py /root/.jupyter/
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
