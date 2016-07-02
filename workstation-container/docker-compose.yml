@@ -13,4 +13,4 @@ services:
   spark-base:
     build:
       context: ../base-container/
-    image: spark-base
+    
