@@ -34,7 +34,9 @@ WORKDIR /usr/local/c9
 RUN git clone https://github.com/c9/core.git
 WORKDIR /usr/local/c9/core
 RUN scripts/install-sdk.sh
+RUN curl -L https://raw.githubusercontent.com/c9/install/master/install.sh | bash
 
+WORKDIR /root
 RUN mkdir -p /var/log/supervisor
 RUN mkdir -p /var/log/supervisor/conf.d
 COPY ./c9.conf /etc/supervisor/conf.d/c9.conf
@@ -55,8 +57,8 @@ ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
 ENV SHELL /bin/bash
 ENV NB_USER root
-ENV NB_UID 1000
-ENV HOME /home/$NB_USER
+#ENV NB_UID 1000
+#ENV HOME /home/$NB_USER
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
