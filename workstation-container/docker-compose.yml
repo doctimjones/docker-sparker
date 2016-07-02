@@ -1,0 +1,18 @@
+# docker-compose up
+version: '2'
+services:
+  workstation:
+    build: 
+      context: ../workstation-container/
+    ports:
+     - "9999:9999" 
+     - "18888:8888"
+    depends_on:
+     - spark-base
+    image: workstation-container
+  spark-base:
+    build:
+      context: ../base-container/
+      args:
+        buildno: 1
+    image: spark-base

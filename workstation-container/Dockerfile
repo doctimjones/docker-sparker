@@ -44,4 +44,4 @@ COPY ./jupyter.conf /etc/supervisor/conf.d/jupyter.conf
 COPY start-notebook.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /root/.jupyter/
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf", "-n"]

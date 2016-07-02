@@ -1,4 +1,5 @@
 nodejs
+nmap
 npm
 texlive
 texlive-base

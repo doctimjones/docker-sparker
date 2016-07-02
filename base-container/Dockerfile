@@ -5,10 +5,10 @@ MAINTAINER Tim Jones (tdj28@github)
 # sudo /etc/apparmor.d/docker
 # sudo service apparmor reload
 # docker build -t spark-base .
-# docker volume create --name dev
+# docker volume create --name #
 
 # interactive:
-# docker run -i -t -p 9999:9999 -p 18888:8888 -v dev:/dev --name pyspark spark-base
+# docker run -i -t -p 9999:9999 -p 18888:8888 --name pyspark spark-base
 
 # docker run -d -v dev:/dev \
 # -e "SPARK_HOME=/SparkSource/spark" \
