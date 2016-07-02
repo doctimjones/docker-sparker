@@ -10,6 +10,11 @@ Spark clusters via Docker infrastructure
 * For the Cloud 9 Composer, navigate to [http://localhost:9999](http://localhost:9999)
 * For the iPython Notebook, navigate to [http://localhost:18888](http://localhost:18888)
 
+## What does it include and how can I change that?
+
+The apt packages and python pips can be found in the packages.txt and requirements.txt respectively.
+Simply edit those files before building the container.
+
 ## Including ssh keys
 
 We turn this off by default as this is [potentially dangerous](https://github.com/docker/docker/issues/6396), however, 

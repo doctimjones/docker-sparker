@@ -1,4 +1,4 @@
-FROM spark-base:latest
+FROM spark-base
 MAINTAINER Tim Jones (tdj28@github)
 
 # sudo curl -sSL https://get.docker.com/ | sh
@@ -40,8 +40,47 @@ RUN mkdir -p /var/log/supervisor/conf.d
 COPY ./c9.conf /etc/supervisor/conf.d/c9.conf
 COPY ./jupyter.conf /etc/supervisor/conf.d/jupyter.conf
 
+################
+# https://github.com/jupyter/docker-stacks/blob/master/base-notebook/Dockerfile
+################
+
+# Install Tini
+RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.9.0/tini && \
+    echo "faafbfb5b079303691a939a747d7f60591f2143164093727e870b289a44d9872 *tini" | sha256sum -c - && \
+    mv tini /usr/local/bin/tini && \
+    chmod +x /usr/local/bin/tini
+
+# Configure environment
+ENV CONDA_DIR /opt/conda
+ENV PATH $CONDA_DIR/bin:$PATH
+ENV SHELL /bin/bash
+ENV NB_USER root
+ENV NB_UID 1000
+ENV HOME /home/$NB_USER
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+
+# Install conda
+RUN cd /tmp && \
+    mkdir -p $CONDA_DIR && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-3.19.0-Linux-x86_64.sh && \
+    echo "9ea57c0fdf481acf89d816184f969b04bc44dea27b258c4e86b1e3a25ff26aa0 *Miniconda3-3.19.0-Linux-x86_64.sh" | sha256sum -c - && \
+    /bin/bash Miniconda3-3.19.0-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+    rm Miniconda3-3.19.0-Linux-x86_64.sh && \
+    $CONDA_DIR/bin/conda install --quiet --yes conda==3.19.1 && \
+    $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
+    conda clean -tipsy
+
+# Install Jupyter notebook
+RUN conda install --quiet --yes \
+    'notebook=4.2*' \
+    && conda clean -tipsy
+
 # Add local files as late as possible to avoid cache busting
 COPY start-notebook.sh /usr/local/bin/
+RUN chmod a+x /usr/local/bin/start-notebook.sh
+RUN mkdir -p /root/.jupyter
 COPY jupyter_notebook_config.py /root/.jupyter/
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf", "-n"]
