@@ -4,11 +4,11 @@ MAINTAINER Tim Jones (doctimjones@github)
 # sudo curl -sSL https://get.docker.com/ | sh
 # sudo /etc/apparmor.d/docker
 # sudo service apparmor reload
-# docker build -t docker-sparker-base .
+# docker build -t doctimjones/docker-sparker-base .
 # docker volume create --name #
 
 # interactive:
-# docker run -i -t -p 9999:9999 -p 18888:8888 --name pyspark docker-sparker-base
+# docker run -i -t -p 9999:9999 -p 18888:8888 --name pyspark doctimjones/docker-sparker-base
 
 # docker run -d -v dev:/dev \
 # -e "SPARK_HOME=/SparkSource/spark" \
@@ -16,7 +16,7 @@ MAINTAINER Tim Jones (doctimjones@github)
 # -e "PATH=$PATH:/SparkSource/spark/bin" \
 # -e "PYTHONPATH=/SparkSource/spark/python:$PYTHONPATH" \
 # -e "PYTHONPATH=/SparkSource/spark/python/lib/py4j-0.9-src.zip:$PYTHONPATH"
-# --name pyspark docker-sparker-base
+# --name pyspark doctimjones/docker-sparker-base
 
 ENV DEBIAN_FRONTEND noninteractive
 
