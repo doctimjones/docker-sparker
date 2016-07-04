@@ -1,5 +1,5 @@
 FROM spark-base
-MAINTAINER Tim Jones (tdj28@github)
+MAINTAINER Tim Jones (doctimjone@github)
 
 # sudo curl -sSL https://get.docker.com/ | sh
 # sudo /etc/apparmor.d/docker
