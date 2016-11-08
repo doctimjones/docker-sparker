@@ -60,7 +60,8 @@ ENV MAVEN_HOME /usr/share/maven
 # Get Spark Source
 RUN mkdir /SparkSource
 WORKDIR /SparkSource
-RUN wget http://mirror.cc.columbia.edu/pub/software/apache/spark/spark-1.6.1/spark-1.6.1.tgz && tar -xvf spark-1.6.1.tgz && ln -is spark-1.6.1 spark
+#RUN wget http://mirror.cc.columbia.edu/pub/software/apache/spark/spark-1.6.1/spark-1.6.1.tgz && tar -xvf spark-1.6.1.tgz && ln -is spark-1.6.1 spark
+RUN wget http://www.apache.org/dyn/closer.lua/spark/spark-2.0.1/spark-2.0.1.tgz && tar -xvf spark-2.0.1.tgz && ln -is spark-2.0.1 spark
 WORKDIR /SparkSource/spark
 ENV MAVEN_OPTS "-Xmx2g -XX:ReservedCodeCacheSize=512m"
 RUN mvn -Psparkr,yarn,hadoop-2.3,parquet-provided -DskipTests -Djline.terminal=jline.UnsupportedTerminal clean package
