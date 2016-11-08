@@ -31,21 +31,4 @@ Simply edit those files before building the container.
 
 ## Including ssh keys
 
-We turn this off by default as this is [potentially dangerous](https://github.com/docker/docker/issues/6396), however, 
-you can add the following lines to the Docker container just above the final 
-`CMD` line:
-
-```
-ARG SSH_KEY
-RUN mkdir -p /root/.ssh && \
-  echo "$SSH_KEY" >/root/.ssh/id_rsa && \
-  chmod 0600 /root/.ssh/id_rsa
-```
-
-and then either build with 
-
-```
-docker build -t workstation-container --build-arg SSH_KEY="$(cat ~/.ssh/id_rsa) .
-```
-
-or modify the compose file to provide arguments as above.
+Don't! You can mount your .ssh folder as a volume mount (see docker-compose examples in this repo) which keeps you from throwing your keys around in containers/images.
