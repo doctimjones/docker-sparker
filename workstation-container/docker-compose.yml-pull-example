@@ -8,4 +8,13 @@ services:
      - "9999:9999" 
      - "18888:8888"
     image: doctimjones/docker-sparker-base
+    volumes:
+     - $HOME/my_project1:/usr/local/develop
+     - $HOME/.ssh:/root/.ssh
+     - $HOME/.aws:/root/.aws
+     - $HOME/.config:/root/.config
+     - $HOME/.gitconfig:/root/.gitconfig
+     - $HOME/.bash_profile:/root/.bash_profile
+     - $HOME/.vim:/root/.vim
+     - $HOME/.vimrc:/root/.vimrc
     
