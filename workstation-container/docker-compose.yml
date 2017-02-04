@@ -16,7 +16,6 @@ services:
      - $HOME/.aws:/root/.aws
      - $HOME/.config:/root/.config
      - $HOME/.gitconfig:/root/.gitconfig
-     - $HOME/.bash_profile:/root/.bash_profile
   spark-base:
     build:
       context: ../base-container/
