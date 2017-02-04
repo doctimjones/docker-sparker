@@ -8,7 +8,7 @@ Spark clusters via Docker infrastructure
 * Install [docker-compose](https://github.com/docker/compose/releases)
 * clone this repository
 * `cd workstation-container`
-* `cp docker-compose.yml-pull-example docker-compose-yml`
+* `cp docker-compose.yml-pull-example docker-compose.yml`
 * `docker pull doctimjones/docker-sparker-base`
 * `docker-compose up`
 * For the Cloud 9 Composer, navigate to [http://localhost:9999](http://localhost:9999)
@@ -19,7 +19,7 @@ Spark clusters via Docker infrastructure
 * Install [docker-compose](https://github.com/docker/compose/releases)
 * clone this repository
 * `cd workstation-container`
-* `cp docker-compose.yml-build-example docker-compose-yml`
+* `cp docker-compose.yml-build-example docker-compose.yml`
 * `docker-compose up`
 * For the Cloud 9 Composer, navigate to [http://localhost:9999](http://localhost:9999)
 * For the iPython Notebook, navigate to [http://localhost:18888](http://localhost:18888)
