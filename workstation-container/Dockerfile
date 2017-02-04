@@ -1,4 +1,5 @@
-FROM doctimjones/docker-sparker-base
+FROM workstationcontainer_spark-base
+#FROM doctimjones/docker-sparker-base
 MAINTAINER Tim Jones (doctimjone@github)
 
 # sudo curl -sSL https://get.docker.com/ | sh
