@@ -5,8 +5,8 @@ services:
     build: 
       context: ../workstation-container/
     ports:
-     - "9999:9999" 
-     - "18888:8888"
+     - "127.0.0.1:9999:9999" 
+     - "127.0.0.1:18888:8888"
     depends_on:
      - spark-base
     image: workstation-container
@@ -17,8 +17,6 @@ services:
      - $HOME/.config:/root/.config
      - $HOME/.gitconfig:/root/.gitconfig
      - $HOME/.bash_profile:/root/.bash_profile
-     - $HOME/.vim:/root/.vim
-     - $HOME/.vimrc:/root/.vimrc
   spark-base:
     build:
       context: ../base-container/
