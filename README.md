@@ -63,6 +63,7 @@ ssh -L 9999:localhost:9999 -L 18888:localhost:18888 username@yourserver
 and then access the Cloud 9 IDE and the Jupyter Notebook at, respectively:
 
 http://localhost:9999/
+
 http://localhost:18888/
 
 
